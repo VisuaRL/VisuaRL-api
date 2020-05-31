@@ -2,7 +2,7 @@ import numpy as np
 
 from maze import BasicMaze
 from dynamic_programming_solver import DPSolver
-from utils import prep_results
+from utils import prep_results, prep_arrows
 
 import argparse
 import json
@@ -30,9 +30,13 @@ def solve(matrix, algo, **kwargs):
 def execute_solver(params, **kwargs):
 
     results = solve(**params, **kwargs)
-    results = prep_results(results)
 
-    return {"values": results, "n":len(results)}
+    if params['algo'] == 'dp':
+        arrows = prep_arrows(results)
+        return {"values": prep_results(results), "n":len(results), "arrows": prep_results(arrows)}
+
+    else:
+        raise Exception(f'Algorithm {algo} not recognized')
 
 
 if __name__ == '__main__':
