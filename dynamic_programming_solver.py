@@ -5,7 +5,7 @@ from utils import prep_val_est_arr, arr_print
 
 
 # Non in-place version of Dynamic Programming algorithm
-def DPSolver(maze, gamma=1, improvement=1e-5, max_iterations=10, **kwargs):
+def DPSolver(maze, gamma=1, improvement=1e-5, max_iterations=100, **kwargs):
     # Initialize value array
     value_arr = prep_val_est_arr(maze.board)
     improved_value_arr = np.array(value_arr, copy=True)
