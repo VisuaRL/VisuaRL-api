@@ -32,7 +32,7 @@ def execute_solver(params, **kwargs):
     results = solve(**params, **kwargs)
     results = prep_results(results)
 
-    return {"stateValues": results, "n":len(results)}
+    return {"values": results, "n":len(results)}
 
 
 if __name__ == '__main__':
@@ -43,5 +43,5 @@ if __name__ == '__main__':
     with open(args.output, 'w') as f:
         results = solve(**params, **(vars(args)))
         results = prep_results(results)
-        json.dump({"stateValues": results,
+        json.dump({"values": results,
                    "n":len(results)}, f)
