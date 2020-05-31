@@ -27,15 +27,12 @@ def solve(matrix, algo, **kwargs):
         raise Exception(f'Algorithm {algo} not recognized')
 
 
-def execute_solver(input_fp, output_fp, **kwargs):
-    with open(input_fp, 'r') as f:
-        params = json.load(f)
+def execute_solver(params, **kwargs):
 
-    with open(output_fp, 'w') as f:
-        results = solve(**params, **kwargs)
-        results = prep_results(results)
-        json.dump({"stateValues": results,
-                   "n":len(results)}, f)
+    results = solve(**params, **kwargs)
+    results = prep_results(results)
+
+    return {"stateValues": results, "n":len(results)}
 
 
 if __name__ == '__main__':
