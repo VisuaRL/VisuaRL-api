@@ -33,7 +33,7 @@ def execute_solver(params, **kwargs):
 
     if params['algo'] == 'dp':
         arrows = prep_arrows(results)
-        return {"values": prep_results(results), "n":len(results), "arrows": prep_results(arrows)}
+        return {"values": prep_results(results), "n":len(results), "arrows": arrows}
 
     else:
         raise Exception(f'Algorithm {algo} not recognized')

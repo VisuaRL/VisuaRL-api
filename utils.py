@@ -41,10 +41,13 @@ def prep_arrows(results):
     # results - list of np.ndarrays (value arrs)
     def process_single_arr(arr):
         rows, cols = arr.shape
-        output = np.zeros_like(arr, dtype=np.int64)
+        output = []
         for row in range(rows):
+            row_arrows = []
             for col in range(cols):
+                arrows = {'up':False, 'down':False, 'left':False, 'right':False}
                 if arr[row, col] == np.iinfo(np.int64).min:
+                    row_arrows.append(arrows)
                     continue
                 out = ['0'] * 4
                 max_val = np.iinfo(np.int64).min
@@ -60,16 +63,17 @@ def prep_arrows(results):
                 # Compute arrows
                 if not row - 1 < 0:
                     if max_val == arr[row - 1, col]:
-                        out[0] = '1'
+                        arrows['up'] = True
                 if not row + 1 >= rows:
                     if max_val == arr[row + 1, col]:
-                        out[1] = '1'
+                        arrows['down'] = True
                 if not col - 1 < 0:
                     if max_val == arr[row, col - 1]:
-                        out[2] = '1'
+                        arrows['left'] = True
                 if not col + 1 >= cols:
                     if max_val == arr[row, col + 1]:
-                        out[3] = '1'
-                output[row, col] = int("".join(out), 2)
+                        arrows['right'] = True
+                row_arrows.append(arrows)
+            output.append(row_arrows)
         return output
     return list(map(process_single_arr, results))
