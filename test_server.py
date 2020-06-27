@@ -8,6 +8,6 @@ def client():
 
 def test_trainer(client):
     with open('data/sample.json', 'r') as f:
-        response = client.post('/ql', data=f, content_type='application/json')
+        response = client.post('/dp', data=f, content_type='application/json')
         print(response.data)
         assert False

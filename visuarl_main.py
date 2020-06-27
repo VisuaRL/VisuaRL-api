@@ -15,16 +15,12 @@ def parse_args():
     return parser.parse_args()
 
 
-def solve(matrix, algo, **kwargs):
+def solve(matrix, **kwargs):
     # Convert matrix into maze opject
     maze = BasicMaze(matrix)
 
     # Switch cases for different algorithms
-    if algo == 'dp':
-        return DPSolver(maze, **kwargs)
-
-    else:
-        raise Exception(f'Algorithm {algo} not recognized')
+    return DPSolver(maze, **kwargs)
 
 
 def execute_dp(params, **kwargs):
