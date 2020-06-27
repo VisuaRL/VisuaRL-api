@@ -66,6 +66,7 @@ def train(matrix, episodes=2000, gamma=0.99, alpha=0.1, **kwargs):
     rew_n = []
 
     q_table_history = []
+    epsilon_history = []
 
     for episode in range(episodes):
 
@@ -78,8 +79,9 @@ def train(matrix, episodes=2000, gamma=0.99, alpha=0.1, **kwargs):
         if episode % 200 == 0:
             print(f'episode: {episode} average rewards: {np.average(rew_n[-100:])}')
             q_table_history.append(copy.deepcopy(q_table))
+            epsilon_history.append(epsilon)
 
-    return q_table_history
+    return q_table_history, epsilon_history
 
 if __name__ == '__main__':
     import json

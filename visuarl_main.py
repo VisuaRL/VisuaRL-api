@@ -39,7 +39,7 @@ def execute_dp(params, **kwargs):
         raise Exception(f'Algorithm {algo} not recognized')
 
 def execute_ql(params, **kwargs):
-    q_table_history = q_train(**params)
+    q_table_history, epsilon_history = q_train(**params)
     dim = len(params['matrix'])
     history = []
 
@@ -52,7 +52,7 @@ def execute_ql(params, **kwargs):
             result.append(result_)
         history.append(result)
 
-    return {"history": history, "n": len(q_table_history)}
+    return {"history": history, "n": len(q_table_history), "epsilon": epsilon_history}
 
 if __name__ == '__main__':
     args = parse_args()
