@@ -22,6 +22,13 @@ class BasicMaze(object):
 
         return board
 
+    def get_start(self):
+        rows, cols = self.board.shape
+        for i in range(rows):
+            for j in range(cols):
+                if self.board[i,j] == 2:
+                    return (i,j)
+
     def initialize(self):
         # Initialize value function array
         rewards_arr = np.zeros_like(self.board)
@@ -45,13 +52,13 @@ class BasicMaze(object):
         rows, cols = self.board.shape
         moves = []
         if x - 1 >= 0:
-            if self.board[x-1,y] != -1: moves.append('UP')
+            if self.board[x-1,y] != np.iinfo(np.int64).min: moves.append('UP')
         if x + 1 < rows:
-            if self.board[x+1,y] != -1: moves.append('DOWN')
+            if self.board[x+1,y] != np.iinfo(np.int64).min: moves.append('DOWN')
         if y - 1 >= 0:
-            if self.board[x,y-1] != -1: moves.append('LEFT')
+            if self.board[x,y-1] != np.iinfo(np.int64).min: moves.append('LEFT')
         if y + 1 < cols:
-            if self.board[x,y+1] != -1: moves.append('RIGHT')
+            if self.board[x,y+1] != np.iinfo(np.int64).min: moves.append('RIGHT')
         return moves
 
     def is_empty(self, x, y):

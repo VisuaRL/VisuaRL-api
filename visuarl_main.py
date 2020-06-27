@@ -3,7 +3,7 @@ import numpy as np
 from maze import BasicMaze
 from dynamic_programming_solver import DPSolver
 from utils import prep_results, prep_arrows
-
+from q_learner import train as q_train
 import argparse
 import json
 
@@ -27,17 +27,32 @@ def solve(matrix, algo, **kwargs):
         raise Exception(f'Algorithm {algo} not recognized')
 
 
-def execute_solver(params, **kwargs):
+def execute_dp(params, **kwargs):
 
     results = solve(**params, **kwargs)
 
     if params['algo'] == 'dp':
         arrows = prep_arrows(results)
-        return {"values": prep_results(results), "n":len(results), "arrows": arrows}
+        return {"values": prep_results(results), "n": len(results), "arrows": arrows}
 
     else:
         raise Exception(f'Algorithm {algo} not recognized')
 
+def execute_ql(params, **kwargs):
+    q_table_history = q_train(**params)
+    dim = len(params['matrix'])
+    history = []
+
+    for q_table in q_table_history:
+        result = []
+        for i in range(dim):
+            result_ = []
+            for j in range(dim):
+                result_.append(q_table[(i,j)].tolist())
+            result.append(result_)
+        history.append(result)
+
+    return {"history": history, "n": len(q_table_history)}
 
 if __name__ == '__main__':
     args = parse_args()
