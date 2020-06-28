@@ -47,7 +47,7 @@ def run_episode(env, q_table, epsilon, gamma, alpha, max_ep_t=100, test=False):
 
 
 
-def train(matrix, episodes=1200, gamma=0.99, alpha=0.1, **kwargs):
+def train(matrix, episodes=2000, gamma=0.99, alpha=0.1, **kwargs):
 
     print(gamma)
     print(alpha)
