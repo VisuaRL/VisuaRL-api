@@ -4,7 +4,7 @@ from maze_env import MazeEnv
 
 import copy
 
-def run_episode(env, q_table, epsilon, gamma, alpha, max_ep_t=500, test=False):
+def run_episode(env, q_table, epsilon, gamma, alpha, max_ep_t=100, test=False):
     rewards = 0.0
     obs = env.reset()
 
