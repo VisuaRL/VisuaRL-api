@@ -4,7 +4,7 @@ from maze_env import MazeEnv
 
 import copy
 
-def run_episode(env, q_table, epsilon, gamma, alpha, max_ep_t=100, test=False):
+def run_episode(env, q_table, epsilon, gamma, alpha, max_ep_t=500, test=False):
     rewards = 0.0
     obs = env.reset()
 
@@ -47,10 +47,7 @@ def run_episode(env, q_table, epsilon, gamma, alpha, max_ep_t=100, test=False):
 
 
 
-def train(matrix, episodes=2000, gamma=0.99, alpha=0.1, **kwargs):
-
-    print(gamma)
-    print(alpha)
+def train(matrix, max_episodes=2000, gamma=0.99, alpha=0.1, **kwargs):
 
     env = MazeEnv(matrix)
 
@@ -67,8 +64,9 @@ def train(matrix, episodes=2000, gamma=0.99, alpha=0.1, **kwargs):
 
     q_table_history = []
     epsilon_history = []
+    rew_history = []
 
-    for episode in range(episodes):
+    for episode in range(max_episodes):
 
         rew = run_episode(env, q_table, epsilon, gamma=gamma, alpha=alpha, test=False)
 
@@ -76,10 +74,13 @@ def train(matrix, episodes=2000, gamma=0.99, alpha=0.1, **kwargs):
 
         epsilon *= 0.995
 
-        if episode % 200 == 0:
+        if episode % 100 == 0:
             print(f'episode: {episode} average rewards: {np.average(rew_n[-100:])}')
             q_table_history.append(copy.deepcopy(q_table))
             epsilon_history.append(epsilon)
+            rew_history.append(np.average(rew_n[-100:]))
+            if abs(rew_history[-1] - np.average(rew_history[-3:])) < 0.5 and episode > 500:
+                break
 
     return q_table_history, epsilon_history
 
