@@ -30,6 +30,9 @@ def execute_dp(params, **kwargs):
 
 def execute_ql(params, **kwargs):
     q_table_history, epsilon_history = q_train(**params)
+
+    epsilon_history[-1] = 0.0
+
     dim = len(params['matrix'])
     history = []
 
