@@ -74,12 +74,12 @@ def train(matrix, max_episodes=2000, gamma=0.99, alpha=0.1, **kwargs):
 
         epsilon *= 0.995
 
-        if episode % 100 == 0:
+        if episode % 50 == 0:
             print(f'episode: {episode} average rewards: {np.average(rew_n[-100:])}')
             q_table_history.append(copy.deepcopy(q_table))
             epsilon_history.append(epsilon)
             rew_history.append(np.average(rew_n[-100:]))
-            if abs(rew_history[-1] - np.average(rew_history[-3:])) < 0.5 and episode > 500:
+            if abs(rew_history[-1] - np.average(rew_history[-4:-1])) < 0.1 and episode > 500:
                 break
 
     return q_table_history, epsilon_history
