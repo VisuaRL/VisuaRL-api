@@ -15,28 +15,18 @@ def parse_args():
     return parser.parse_args()
 
 
-def solve(matrix, algo, **kwargs):
+def solve(matrix, **kwargs):
     # Convert matrix into maze opject
     maze = BasicMaze(matrix)
 
     # Switch cases for different algorithms
-    if algo == 'dp':
-        return DPSolver(maze, **kwargs)
-
-    else:
-        raise Exception(f'Algorithm {algo} not recognized')
+    return DPSolver(maze, **kwargs)
 
 
 def execute_dp(params, **kwargs):
-
     results = solve(**params, **kwargs)
-
-    if params['algo'] == 'dp':
-        arrows = prep_arrows(results)
-        return {"values": prep_results(results), "n": len(results), "arrows": arrows}
-
-    else:
-        raise Exception(f'Algorithm {algo} not recognized')
+    arrows = prep_arrows(results)
+    return {"values": prep_results(results), "n": len(results), "arrows": arrows}
 
 def execute_ql(params, **kwargs):
     q_table_history, epsilon_history = q_train(**params)
