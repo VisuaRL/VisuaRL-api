@@ -43,7 +43,7 @@ def execute_td_learning(params, policy, **kwargs):
     elif policy == 'ql':
         trainer = q_train
 
-    q_table_history, epsilon_history = trainer(**params)
+    q_table_history, epsilon_history, rew_n = trainer(**params)
 
     epsilon_history[-1] = 0.0
 
@@ -71,7 +71,7 @@ def execute_td_learning(params, policy, **kwargs):
             sample_history.append(history[i])
             sample_epsilon_history.append(epsilon_history[i])
 
-    return {"history": sample_history, "n": len(sample_history), "epsilon": sample_epsilon_history}
+    return {"history": sample_history, "n": len(sample_history), "epsilon": sample_epsilon_history, "rewwards": rew_n}
 
 
 if __name__ == '__main__':
