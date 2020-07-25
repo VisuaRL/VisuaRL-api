@@ -11,6 +11,10 @@ def run_episode(env, q_table, epsilon, gamma, alpha, max_ep_t=100, test=False):
 
     done = False
 
+    prev_obs = None
+    prev_act = None
+    prev_rew = None
+
     for t in range(max_ep_t):
         # get available actions
         avail_actions = env.get_available_actions()
@@ -30,15 +34,18 @@ def run_episode(env, q_table, epsilon, gamma, alpha, max_ep_t=100, test=False):
         next_obs, rew, done = env.step(action)
 
         # update Q-value
-        old_q = q_table[obs][action]
-        next_q_values = q_table[next_obs]
-        q_table[obs][action] = old_q + alpha * \
-            (rew + gamma * np.max(next_q_values) - old_q)
-
-        # print(q_table[obs][action])
+        if prev_obs or prev_act or prev_rew:
+            old_q = q_table[prev_obs][prev_act]
+            next_q_value = q_table[obs][action]
+            q_table[prev_obs][prev_act] = old_q + alpha * \
+                (prev_rew + gamma * next_q_value - old_q)
 
         # upate obs
+        prev_obs = obs
+        prev_act = action
+        prev_rew = rew
         obs = next_obs
+
         # add rewards
         rewards += rew
 
