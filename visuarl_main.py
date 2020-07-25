@@ -71,7 +71,7 @@ def execute_td_learning(params, policy, **kwargs):
             sample_history.append(history[i])
             sample_epsilon_history.append(epsilon_history[i])
 
-    return {"history": sample_history, "n": len(sample_history), "epsilon": sample_epsilon_history, "rewwards": rew_n}
+    return {"history": sample_history, "n": len(sample_history), "epsilon": sample_epsilon_history, "rewards": rew_n}
 
 
 if __name__ == '__main__':
