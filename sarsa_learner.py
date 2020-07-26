@@ -55,7 +55,7 @@ def run_episode(env, q_table, epsilon, gamma, alpha, max_ep_t=100, test=False):
     return rewards
 
 
-def train(matrix, max_episodes=2000, gamma=0.99, alpha=0.1, **kwargs):
+def train(matrix, epsilonDecay, max_episodes=2000, gamma=0.99, alpha=0.1, **kwargs):
 
     env = MazeEnv(matrix)
 
@@ -81,7 +81,7 @@ def train(matrix, max_episodes=2000, gamma=0.99, alpha=0.1, **kwargs):
 
         rew_n.append(rew)
 
-        epsilon *= 0.995
+        epsilon *= epsilonDecay
 
         if episode % 20 == 0:
             print(
