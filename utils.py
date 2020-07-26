@@ -33,7 +33,8 @@ def prep_results(results):
     results = list(map(lambda x: x.tolist(), results))
     for result in results:
         for j, row in enumerate(result):
-            result[j] = list(map(lambda x: x if x != np.iinfo(np.int64).min else 'x', row))
+            result[j] = list(
+                map(lambda x: x if x != np.iinfo(np.int64).min else 'x', row))
     return results
 
 
@@ -45,7 +46,8 @@ def prep_arrows(results):
         for row in range(rows):
             row_arrows = []
             for col in range(cols):
-                arrows = {'up':False, 'down':False, 'left':False, 'right':False}
+                arrows = {'up': False, 'down': False,
+                          'left': False, 'right': False}
                 if arr[row, col] == np.iinfo(np.int64).min:
                     row_arrows.append(arrows)
                     continue
@@ -53,13 +55,17 @@ def prep_arrows(results):
                 max_val = np.iinfo(np.int64).min
                 # Get max value
                 if not row - 1 < 0:
-                    max_val = max_val if arr[row - 1, col] < max_val else arr[row - 1, col]
+                    max_val = max_val if arr[row - 1,
+                                             col] < max_val else arr[row - 1, col]
                 if not row + 1 >= rows:
-                    max_val = max_val if arr[row + 1, col] < max_val else arr[row + 1, col]
+                    max_val = max_val if arr[row + 1,
+                                             col] < max_val else arr[row + 1, col]
                 if not col - 1 < 0:
-                    max_val = max_val if arr[row, col - 1] < max_val else arr[row, col - 1]
+                    max_val = max_val if arr[row, col -
+                                             1] < max_val else arr[row, col - 1]
                 if not col + 1 >= cols:
-                    max_val = max_val if arr[row, col + 1] < max_val else arr[row, col + 1]
+                    max_val = max_val if arr[row, col +
+                                             1] < max_val else arr[row, col + 1]
                 # Compute arrows
                 if not row - 1 < 0:
                     if max_val == arr[row - 1, col]:

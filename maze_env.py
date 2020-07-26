@@ -4,10 +4,10 @@ import numpy as np
 
 
 move_to_idx = {
-    'UP':0,
-    'DOWN':1,
-    'LEFT':2,
-    'RIGHT':3
+    'UP': 0,
+    'DOWN': 1,
+    'LEFT': 2,
+    'RIGHT': 3
 }
 
 idx_to_move = {
@@ -16,6 +16,7 @@ idx_to_move = {
     2: 'LEFT',
     3: 'RIGHT'
 }
+
 
 class MazeEnv(object):
     def __init__(self, board):
@@ -37,6 +38,7 @@ class MazeEnv(object):
         rew = self.maze.get_state_reward(*self.state)
         done = self.maze.is_goal_state(*next_state)
         self.state = next_state
+        assert not self.maze.is_empty(*self.state)
         return self.state, rew, done
 
     def get_available_actions(self):

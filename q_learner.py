@@ -19,12 +19,13 @@ def run_episode(env, q_table, epsilon, gamma, alpha, max_ep_t=100, test=False):
         q_values = q_table[obs]
         mask = np.ones(q_values.shape, bool)
         mask[avail_actions] = 0
-        q_values[mask] = -99999
+        q_values[mask] = -9999
 
         action = np.argmax(q_values)
 
         if test is False and np.random.random() < epsilon:
             action = np.random.choice(avail_actions)
+            assert action in avail_actions
 
         # execute action
         next_obs, rew, done = env.step(action)
@@ -49,7 +50,6 @@ def run_episode(env, q_table, epsilon, gamma, alpha, max_ep_t=100, test=False):
 
 
 def train(matrix, epsilonDecay, max_episodes=2000, gamma=0.99, alpha=0.1, **kwargs):
-
     env = MazeEnv(matrix)
 
     q_table = {}
@@ -57,7 +57,20 @@ def train(matrix, epsilonDecay, max_episodes=2000, gamma=0.99, alpha=0.1, **kwar
     rows, cols = env.maze.board.shape
     for i in range(rows):
         for j in range(cols):
-            q_table[(i, j)] = np.array([-50, -50, -50, -50], np.float)
+            q_vals = np.array([-50, -50, -50, -50], np.float)
+            if i - 1 >= 0:
+                if env.maze.board[i-1, j] == np.iinfo(np.int64).min:
+                    q_vals[0] = -9999
+            if i + 1 < rows:
+                if env.maze.board[i+1, j] == np.iinfo(np.int64).min:
+                    q_vals[1] = -9999
+            if j - 1 >= 0:
+                if env.maze.board[i, j-1] == np.iinfo(np.int64).min:
+                    q_vals[2] = -9999
+            if j + 1 < cols:
+                if env.maze.board[i, j+1] == np.iinfo(np.int64).min:
+                    q_vals[3] = -9999
+            q_table[(i, j)] = q_vals
 
     epsilon = 1.0
 
