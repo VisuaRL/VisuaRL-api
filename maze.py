@@ -36,8 +36,8 @@ class BasicMaze(object):
         # Set appropriate values for rewards arr
         empty_cells = self.board == 0
         rewards_arr[empty_cells] = np.iinfo(np.int64).min
-        rewards_arr[np.logical_not(empty_cells)] = -1
-        rewards_arr[self.board == 3] = 0
+        rewards_arr[np.logical_not(empty_cells)] = 5
+        rewards_arr[self.board == 3] = 20
 
         return rewards_arr
 
