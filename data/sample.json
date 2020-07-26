@@ -13,5 +13,5 @@
   ],
   "gamma": 1.0,
   "alpha": 0.5,
-  "epsilonDecay": 0.995
+  "epsilonDecay": 0.9
 }
