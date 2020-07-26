@@ -89,7 +89,7 @@ def train(matrix, epsilonDecay, max_episodes=2000, gamma=0.99, alpha=0.1, **kwar
             q_table_history.append(copy.deepcopy(q_table))
             epsilon_history.append(epsilon)
             rew_history.append(np.average(rew_n[-100:]))
-            if abs(rew_history[-1] - np.average(rew_history[-4:-1])) < 0.1 and episode > 500:
+            if abs(rew_history[-1] - np.average(rew_history[-4:-1])) < 1 and episode > 500:
                 break
 
     return q_table_history, epsilon_history, rew_n
